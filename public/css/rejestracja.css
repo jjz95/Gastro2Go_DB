@@ -1,0 +1,115 @@
+html {
+    background-image: linear-gradient(to bottom left, white, black);
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+a {
+    color: black;
+}
+
+p {
+    font-family: 'Sedgwick Ave Display', cursive;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: table;
+    margin: auto;
+    min-width: 600px;
+    max-width: 2000px;
+    min-height: 1000px;
+    max-height: 2000px;
+}
+
+header,
+.horizontalNav {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    border-style: groove;
+    border: 5px ridge #A40000;
+}
+
+button {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 96%;
+    background-color: crimson;
+    height: 0.5em;
+}
+
+.headerItem {
+    flex-basis: 1200px;
+    font-weight: bolder;
+    font-size: 4em;
+    font-family: 'Sedgwick Ave Display', cursive;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.headerItemImg {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.GastroIcon {
+    width: 550px;
+    height: 220px;
+    max-width: 50%;
+    max-height: 50%;
+}
+
+
+main {
+    background-image: url("gastrowallT1.jpg");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 600px;
+    max-width: 2000px;
+    min-height: 800px;
+    max-height: 2000px;
+}
+
+
+footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-right: 10px;
+}
+

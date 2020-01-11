@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<script defer src="/js/index.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/profil.css" />
+    <link rel="stylesheet" href="/css/styleIndex.css" />
+    <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+    <script> var exports = {}; </script>
+    <script defer src="/js/updateOrderComponent.js"></script>
+    <title>Gastro2Go</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="headerItemImg">
+            <div>
+                <a href="/users/"><img class="GastroIcon" src="/img/GASTRO.png" alt="???"></a>
+            </div>
+        </div>
+        <div class="headerItem">
+            <a href="/users/panel">Twój Panel</a>
+            <a href="/users">Profil</a>
+            <a href="/info/kontakt">Kontakt</a>
+            <a href="/info/onas">O Nas</a>
+            <a href="/auth/logout">Wyloguj</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="main">
+            <div class="product-table">
+                <table>
+                    <caption>Products:</caption>
+                    <thead>
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Typ</th>
+                            <th>Waga</th>
+                            <th>Cena</th>
+                            <th>Waga ogolem</th>
+                            <th>Cena ogolem</th>
+                            <th>Ilosc</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                    </tfoot>
+                    <tbody id="tbody-orderComponents">
+                        <% if(productList.length > 0){ %>
+                        <% productList.forEach(function(pv){ %>
+                        <tr>
+                            <form action="/users/removeproduct/<%= pv.product.id %>" method="POST">
+                                <td><%= pv.product.nazwa %></td>
+                                <td><%= pv.product.typ %></td>
+                                <td id="waga<%= pv.product.id %>"><%= pv.product.waga %></td>
+                                <td id="cena<%= pv.product.id %>"><%= pv.product.cena %></td>
+                                <td id="waga-ilosc<%= pv.product.id %>"><%= pv.product.waga * pv.ilosc %></td>
+                                <td id="cena-ilosc<%= pv.product.id %>"><%= pv.product.cena * pv.ilosc %></td>
+                                <td><input class="ilosc" id="ilosc<%= pv.product.id %>" min="1" type="number" name="ilosc"
+                                        required value="<%= pv.ilosc %>"></td>
+                                <td><button type="submit">Remove Product</button></td>
+                            </form>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <button onclick="updateProducts()" type="submit">Update Products</button>
+            <br>
+            <table id="tabelka">
+                <caption>Products:</caption>
+                <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Typ</th>
+                        <th>Waga</th>
+                        <th>Cena</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                </tfoot>
+                <tbody>
+                    <% restProductList.forEach(function(p){ %>
+                    <tr>
+                    
+                            <td><%= p.nazwa %></td>
+                            <td><%= p.typ %></td>
+                            <td><%= p.waga %></td>
+                            <td><%= p.cena %></td>
+                    
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <div>
+                <form action="/users/addproduct" method="POST">
+                    <p class="inline-block">Add new product to your cart:</p>
+                    <select name="productId" class="inline-block">
+                        <% if (restProductList.length > 0) { %>
+                        <% restProductList.forEach(function(rp){ %>
+                        <option value="<%= rp.id %>"><%= rp.nazwa %></option>
+                        <% })} %>
+                    </select>
+                    <div>
+                        <button type="submit">Add Product</button>
+                    </div>
+                </form>
+                
+
+            </div>
+        </div>
+        <div>
+        </div>
+    </main>
+
+    <footer>
+        <div>
+            <p>Jakub Żarkowski S16574</p>
+        </div>
+
+
+    </footer>
+
+</body>
+
+</html>

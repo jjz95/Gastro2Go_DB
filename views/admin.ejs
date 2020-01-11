@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/admin.css" />
+    <script> var exports = {}; </script>
+    <script defer src="/js/delete.js"></script>
+    <title>Admin</title>
+</head>
+
+<body>
+
+    <header>
+
+    </header>
+    <main>
+        <a href="/admin/logout">Log out</a>
+        <br>
+        <hr>
+        <br>
+        <table>
+            <caption>Users:</caption>
+            <thead>
+                <tr>
+                    <!-- firstName, lastName, email, passwordHash, dateOfBirth, contactNumber, business, address, zipCode, country, id -->
+                    <th></th>
+                    <th>User ID</th>
+                    <th>E-mail</th>
+                    <th>Password</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>ContactNumber</th>
+                    <th>DateOfBirth</th>
+                    <th>Business</th>
+                    <th>Address</th>
+                    <th>ZipCode</th>
+                    <th>Country</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% userList.forEach(function(user){ %>
+                <tr>
+                    <td></td>
+                    <td><%= user.id %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.passwordHash %></td>
+                    <td><%= user.firstName %></td>
+                    <td><%= user.lastName %></td>
+                    <td><%= user.contactNumber %></td>
+                    <td><%= user.dateOfBirth %></td>
+                    <td><%= user.business %></td>
+                    <td><%= user.address %></td>
+                    <td><%= user.zipCode %></td>
+                    <td><%= user.country %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <br>
+        <hr>
+        <br>
+        <table>
+            <caption>Products:</caption>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Nazwa</th>
+                    <th>Typ</th>
+                    <th>Waga</th>
+                    <th>Cena</th>
+                </tr>
+            </thead>
+            <tfoot>
+            </tfoot>
+            <tbody>
+                <% productList.forEach(function(product){ %>
+                <tr>
+                    <td><input type="checkbox" name="checkbox<%= product.id %>" value="<%= product.id %>"></td>
+                    <form action="/admin/updateproduct" method="POST">
+                        <td><%= product.id %></td>
+                        <input type="hidden" name="id" value="<%= product.id %>" />
+                        <td><input type="text" name="nazwa" required value="<%= product.nazwa %>"></td>
+                        <td><input type="text" name="typ" required value="<%= product.typ %>"></td>
+                        <td><input type="number" min="0" name="waga" required value="<%= product.waga %>"></td>
+                        <td><input type="number" min="0" name="cena" required value="<%= product.cena %>"></td>
+                        <td><button type="submit">Edit Product</button></td>
+
+                    </form>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        
+        <br>
+        <form action="/admin/addproduct" method="POST">
+            <p>Add new product to system:</p>
+            <input type="text" name="nazwa" placeholder="Write product name here" required>
+            <input type="text" name="typ" placeholder="Write product type here" required>
+            <input type="number" min="0" name="waga" placeholder="Write product wage here" required>
+            <input type="number" min="0" name="cena" placeholder="Write product price here" required>
+            <br>
+            <button class="btn" type="submit">Add Product</button>
+        </form>
+        <br>
+        
+        <br>
+        <hr>
+        <br>
+        <button onclick="deleteSelectedProducts()" id='deleteBtn' type="submit">Delete Selected Products</button>
+        <br>
+        <hr>
+        <br>
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>

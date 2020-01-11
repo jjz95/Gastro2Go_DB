@@ -1,0 +1,134 @@
+html {
+    background-image: linear-gradient(to bottom left, white, black);
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+a {
+    color: black;
+}
+
+p {
+    font-family: 'Sedgwick Ave Display', cursive;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: table;
+    margin: auto;
+    min-width: 600px;
+    max-width: 2000px;
+}
+
+
+header,
+.horizontalNav {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    border-style: groove;
+    border: 5px ridge #A40000;
+}
+
+button {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 96%;
+    background-color: crimson;
+    height: 0.5em;
+}
+
+.headerItem {
+    flex-basis: 1200px;
+    font-weight: bolder;
+    font-size: 4em;
+    font-family: 'Sedgwick Ave Display', cursive;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.headerItemImg {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.GastroIcon {
+    width: 550px;
+    height: 220px;
+    max-width: 50%;
+    max-height: 50%;
+}
+
+main {
+    font-family: 'Sedgwick Ave Display', cursive;
+    font-size: 1.1em;
+    background-image: url("gastrowallT1.jpg");
+    min-width: 600px;
+    max-width: 2000px;
+    min-height: 800px;
+    max-height: 2000px;
+    display: grid;
+    grid-template-columns: 5% 25% 5% 10% 10% 10% 5% 25% 5%;
+    grid-template-rows: 5% 75% 5% 10% 5%;
+
+}
+
+footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-right: 10px;
+}
+
+#testing {
+    background-color: white;
+    display: grid;
+    grid-column: 2 / 5;
+    grid-row: 2 / 3;
+}
+
+#tabelka{
+    background-color: rgb(255, 255, 255, 0.9);
+}
+
+.inline-block{
+    display: inline-block;
+    background-color: seashell;
+    /* grid-column:  */
+    width: 15rem;
+}
