@@ -86,9 +86,18 @@ class User {
     }
 
     //usuwanie obiektu po id
-    static delete(id) {
-        OrderComponent.deleteUsers(id)
-        return userExtent.splice(userExtent.findIndex(u => u.id == id), 1)
+    static async delete(id) {
+        // OrderComponent.deleteUsers(id)
+        // return userExtent.splice(userExtent.findIndex(u => u.id == id), 1)
+        // // await db.execute(
+        // //     'DELETE FROM user_interest WHERE user_id=(?);',
+        // //     [id]
+        // // );
+        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', id)
+        await db.execute(
+            'DELETE FROM client WHERE id=(?);',
+            [id]
+        );
     }
 
     //metoda resetuje stan bazy i dodaje rekordy testowe

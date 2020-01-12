@@ -13,8 +13,8 @@ router.post('/', authRedirect, async (req, res, next) => {
     const password = req.body.fpass;
     let user = await User.findByEmail(email);
 
-    user = new User(user.firstName, user.lastName, user.email, user.passwordHash, user.dateOfBirth, user.contactNumber, user.business, user.address, user.zipCode, user.country)
     if (user) {
+        user = new User(user.firstName, user.lastName, user.email, user.passwordHash, user.dateOfBirth, user.contactNumber, user.business, user.address, user.zipCode, user.country, user.id)
         user.comparePassword(password)
             .then(result => {
                 if (result) {
