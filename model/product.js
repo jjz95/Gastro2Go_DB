@@ -38,7 +38,6 @@ class Product {
         let DBdata = []
         await db.execute('select * from product')
             .then(([data, metadata]) => {
-                console.log(data)
                 DBdata.push(data)
             }).catch(err => {
                 console.log('err', err)
@@ -47,14 +46,19 @@ class Product {
     }
     //edycja obiektu
     static async edit(nazwa, typ, waga, cena, id) {
-        let productToEdit = productExtent.find(u => u.id == id)
-        productToEdit.nazwa = nazwa
-        productToEdit.typ = typ
-        productToEdit.waga = waga
-        // productToEdit.data_produkcji = data_produkcji
-        // productToEdit.data_waznosci = data_waznosci
-        productToEdit.cena = cena
-        return productToEdit;
+        // let productToEdit = productExtent.find(u => u.id == id)
+        // productToEdit.nazwa = nazwa
+        // productToEdit.typ = typ
+        // productToEdit.waga = waga
+        // // productToEdit.data_produkcji = data_produkcji
+        // // productToEdit.data_waznosci = data_waznosci
+        // productToEdit.cena = cena
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', id)
+        await db.execute(
+            'update product set nazwa = (?), cena = (?), typ = (?), waga = (?) where id = (?)',
+            [nazwa, cena, typ, waga, id]
+        );
+        return true;
     }
 
     //usuwanie obiektu po id
@@ -65,19 +69,19 @@ class Product {
 
     //metoda resetuje stan bazy i dodaje rekordy testowe
     //przydatna do testów
-    static async initData() {
-        //usuwamy zawartość tablicy
-        productExtent.splice(0, productExtent.length);
-        //resetujemy licznik id
-        nextId = 1;
+    // static async initData() {
+    //     //usuwamy zawartość tablicy
+    //     productExtent.splice(0, productExtent.length);
+    //     //resetujemy licznik id
+    //     nextId = 1;
 
-        // Product.add(new Product('pizza', 'food', 2, 20));
-        // Product.add(new Product('schabowy', 'food', 1, 10));
-        // Product.add(new Product('patelnia', 'tool', 3, 40));
-        // Product.add(new Product('pierogi', 'food', 4, 5));
-    }
+    //     // Product.add(new Product('pizza', 'food', 2, 20));
+    //     // Product.add(new Product('schabowy', 'food', 1, 10));
+    //     // Product.add(new Product('patelnia', 'tool', 3, 40));
+    //     // Product.add(new Product('pierogi', 'food', 4, 5));
+    // }
 }
 
-Product.initData();
+// Product.initData();
 
 module.exports = Product;
