@@ -7,7 +7,7 @@ var Product = require('../model/product')
 /* GET home page. */
 router.get('/', async function (req, res, next) {
     res.render('admin', {
-        userList: User.list(),
+        userList: await User.list(),
         productList: await Product.list()
         // interestList: Interest.list()
     })

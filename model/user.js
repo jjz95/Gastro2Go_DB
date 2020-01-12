@@ -30,22 +30,43 @@ class User {
         // user.id = nextId++;
         // userExtent.push(user);
         // return user;
-        if (!User.list().some(u => u.email.toLowerCase() === user.email.toLowerCase())) {
-            user.id = nextId++;
+        // // if (!User.list().some(u => u.email.toLowerCase() === user.email.toLowerCase())) {
+        // //     user.id = nextId++;
+        // //     let hashedPass = await bcrypt.hash(user.passwordHash, 10)
+        // //     user.passwordHash = hashedPass
+        // //     userExtent.push(user);
+        // //     return true;
+        // // }
+        // // return false;
+        let users = await User.list()
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        if (!users.some(u => u.email.toLowerCase() == user.email.toLowerCase())) {
             let hashedPass = await bcrypt.hash(user.passwordHash, 10)
             user.passwordHash = hashedPass
-            userExtent.push(user);
+
+            await db.execute(
+                'insert into client (firstName, lastName, email, passwordHash, dateOfBirth, contactNumber, business, address, zipCode, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [user.firstName, user.lastName, user.email, user.passwordHash, user.dateOfBirth, user.contactNumber, user.business, user.address, user.zipCode, user.country]
+            ).catch(err => console.log(err))
             return true;
         }
         return false;
+
     }
 
     //pobranie listy obiektów
     //metoda nie powinna pobierać nadmiarowych danych
     //(np. przez złączenia JOIN w relacyjnej bazie danych)
     //które nie będą wyświetlane na liście
-    static list() {
-        return userExtent;
+    static async list() {
+        let DBdata = []
+        await db.execute('select * from client')
+            .then(([data, metadata]) => {
+                DBdata.push(data)
+            }).catch(err => {
+                console.log('err', err)
+            })
+        return DBdata[0];
     }
     //edycja obiektu
     static async edit(firstName, lastName, email, passwordHash, dateOfBirth, contactNumber, business, address, zipCode, country, id) {
@@ -84,8 +105,9 @@ class User {
         User.add(new User('Andrzej', 'Nowak', 'an@gmail.com', '1234', new Date("1992-03-25"), 222222222, 'snowboard', 'smith street', '00-002', 'England'));
     }
 
-    static findByEmail(email) {
-        return userExtent.find(u => u.email == email);
+    static async findByEmail(email) {
+        let users = await User.list()
+        return users.find(u => u.email == email);
     }
 
     static hashPassword(plainPassword) {
@@ -94,13 +116,13 @@ class User {
         return bcrypt.hash(plainPassword, 12);
     }
 
-    comparePassword(plainPassword) {
+    async comparePassword(plainPassword) {
         //wołanie asynchroniczne
         //zwraca promesę, a nie wynik bezpośrednio
-        return bcrypt.compare(plainPassword, this.passwordHash);
+        return await bcrypt.compare(plainPassword, this.passwordHash);
     }
 }
 
-User.initData();
+// User.initData();
 
 module.exports = User;

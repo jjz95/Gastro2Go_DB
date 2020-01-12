@@ -8,10 +8,12 @@ const authRedirect = require('../middleware/authRedirect');
 
 
 //login
-router.post('/', authRedirect, (req, res, next)  => {
+router.post('/', authRedirect, async (req, res, next) => {
     const email = req.body.flogin;
     const password = req.body.fpass;
-    const user = User.findByEmail(email);
+    let user = await User.findByEmail(email);
+
+    user = new User(user.firstName, user.lastName, user.email, user.passwordHash, user.dateOfBirth, user.contactNumber, user.business, user.address, user.zipCode, user.country)
     if (user) {
         user.comparePassword(password)
             .then(result => {
@@ -25,17 +27,17 @@ router.post('/', authRedirect, (req, res, next)  => {
             })
     } else {
         var foundAdmin = Admin.list().find(u => u.email.toLowerCase() === email.toLowerCase());
-        if(foundAdmin){
+        if (foundAdmin) {
             foundAdmin.comparePassword(password)
-            .then(result => {
-                if (result) {
-                    req.session.isAdminLoggedIn = true;
-                    req.session.loggedAdmin = foundAdmin;
-                    res.redirect('/admin/');
-                } else {
-                    invalidEmailOrPassword(req, res);
-                }
-            }).catch(err => console.log(err))
+                .then(result => {
+                    if (result) {
+                        req.session.isAdminLoggedIn = true;
+                        req.session.loggedAdmin = foundAdmin;
+                        res.redirect('/admin/');
+                    } else {
+                        invalidEmailOrPassword(req, res);
+                    }
+                }).catch(err => console.log(err))
             // let isAdminPassCorrect = await bcrypt.compare(bodyPassword, foundAdmin.password)
 
             // if (isAdminPassCorrect) {
