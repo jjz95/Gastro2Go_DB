@@ -2,8 +2,8 @@ var OrderComponent = require('./orderComponent');
 
 const db = require('../db/mysql');
 
-
-
+//licznik id
+let nextId = 1;
 //ekstensja klasy (wszystkie obiekty)
 const productExtent = [];
 
@@ -19,31 +19,20 @@ class Product {
 
     //dodawanie obiektu do bazy
     static async add(product) {
-        let productList = await Product.list()
-        console.log(product.nazwa.toLowerCase())
-        if (!productList.some(u => u.nazwa.toLowerCase() === product.nazwa.toLowerCase())) {
-            await db.execute(
-                'insert into product (nazwa, cena, typ, waga) values (?, ?, ?, ?)',
-                [product.nazwa, product.cena, product.typ, product.waga]
-            );
+        if (!Product.list().some(u => u.nazwa.toLowerCase() === product.nazwa.toLowerCase())) {
+            product.id = nextId++;
+            productExtent.push(product);
+            return true;
         }
+        return false;
     }
 
     //pobranie listy obiektów
     //metoda nie powinna pobierać nadmiarowych danych
     //(np. przez złączenia JOIN w relacyjnej bazie danych)
     //które nie będą wyświetlane na liście
-    static async list() {
-        // return productExtent;
-        let DBdata = []
-        await db.execute('select * from product')
-            .then(([data, metadata]) => {
-                console.log(data)
-                DBdata.push(data)
-            }).catch(err => {
-                console.log('err', err)
-            })
-        return DBdata[0];
+    static list() {
+        return productExtent;
     }
     //edycja obiektu
     static async edit(nazwa, typ, waga, cena, id) {
@@ -71,10 +60,10 @@ class Product {
         //resetujemy licznik id
         nextId = 1;
 
-        // Product.add(new Product('pizza', 'food', 2, 20));
-        // Product.add(new Product('schabowy', 'food', 1, 10));
-        // Product.add(new Product('patelnia', 'tool', 3, 40));
-        // Product.add(new Product('pierogi', 'food', 4, 5));
+        Product.add(new Product('pizza', 'food', 2, 20));
+        Product.add(new Product('schabowy', 'food', 1, 10));
+        Product.add(new Product('patelnia', 'tool', 3, 40));
+        Product.add(new Product('pierogi', 'food', 4, 5));
     }
 }
 

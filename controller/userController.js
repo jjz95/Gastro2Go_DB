@@ -7,28 +7,21 @@ const OrderComponent = require('../model/orderComponent');
 
 const ProductView = require('../model/productView');
 
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
     let productList = []
     let products = []
+    let realProductList = await Product.list()
     OrderComponent.list()
         .filter(oc => oc.idUser == req.session.loggedUser.id)
         .forEach(oc => {
-            let newProd = Product.list().find(p => p.id == oc.idProduct)
+            let newProd = realProductList.find(p => p.id == oc.idProduct)
             products.push(newProd)
             let newProdView = new ProductView(newProd, oc.ilosc)
             productList.push(newProdView)
         })
 
     let restProductList = []
-    restProductList = Product.list().filter( ( el ) => !products.includes( el ) );
-
-    // OrderComponent.list()
-    //     .filter(oc => oc.idUser != req.session.loggedUser.id)
-    //     .forEach(oc => {
-    //         restProductList.push(Product.list().find(p => p.id == oc.idProduct))
-    //     })
-
-    //     Product.list().filter(p => p.id == )
+    restProductList = realProductList.filter( ( el ) => !products.includes( el ) );
 
     res.render('profil', {
         productList: productList,

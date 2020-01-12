@@ -36,42 +36,62 @@
                 <li class="form-row">
                     <label for="fimie">Imie:</label>
                     <input type="text" id="fimie" name="fimie" required value='<%= user.firstName %>'>
+                    <li id="imie_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="fnazwisko">Nazwisko:</label>
                     <input type="text" id="fnazwisko" name="fnazwisko" required value="<%= user.lastName %>">
+                    <li id="nazwisko_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="femail">E-mail:</label>
                     <input type="email" id="femail" name="femail" required value="<%= user.email %>">
+                    <li id="email_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="fpass">Hasło:</label>
                     <input type="password" id="fpass" name="fpass" required>
+                    <li id="pass_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="fpass2">Powtórz hasło:</label>
                     <input type="password" id="fpass2" name="fpass2" required>
+                    <li id="pass2_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="fdate">Data urodzenia:</label>
                     <input type="date" id="fdate" name="fdate" max="2001-11-13" required value="<%= date %>">
+                    <li id="date_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="fnumer">Numer kontaktowy:</label>
                     <input type="text" id="fnumer" name="fnumer" required value="<%= user.contactNumber %>">
+                    <li id="number_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="fdzialalnosc">Działalność gospodarcza:</label>
                     <input type="text" id="fdzialalnosc" name="fdzialalnosc" required value="<%= user.business %>">
+                    <li id="dzialalnosc_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="fadres">Adres:</label>
                     <input type="text" id="fadres" name="fadres" required value="<%= user.address %>">
+                    <li id="adres_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="fkod">Kod pocztowy:</label>
                     <input type="text" id="fkod" name="fkod" required value="<%= user.zipCode %>">
+                    <li id="kod_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <label for="fkraj">Kraj:</label>
@@ -326,6 +346,8 @@
                         <option value="ZM">Zambia</option>
                         <option value="ZW">Zimbabwe</option>
                     </select>
+                    <li id="kraj_error" class="val_error"></li>
+
                 </li>
                 <li class="form-row">
                     <button onclick="return validreg()" type="submit">Kontynuuj</button>

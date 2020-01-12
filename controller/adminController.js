@@ -5,10 +5,10 @@ var User = require('../model/user')
 var Product = require('../model/product')
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
     res.render('admin', {
         userList: User.list(),
-        productList: Product.list()
+        productList: await Product.list()
         // interestList: Interest.list()
     })
 });

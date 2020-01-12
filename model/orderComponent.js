@@ -1,6 +1,9 @@
 //ekstensja klasy (wszystkie obiekty)
 const orderComponentExtent = [];
 
+const db = require('../db/mysql');
+
+
 class OrderComponent {
     //parametr id jest na końcu, bo jest opcjonalny
     constructor(idUser, idProduct, ilosc) {

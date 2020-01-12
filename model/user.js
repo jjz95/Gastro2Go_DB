@@ -1,6 +1,8 @@
 var OrderComponent = require('./orderComponent');
 
 const bcrypt = require('bcryptjs');
+const db = require('../db/mysql');
+
 
 //licznik id
 let nextId = 1;
