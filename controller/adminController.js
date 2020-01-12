@@ -48,12 +48,18 @@ router.post('/addproduct', function (req, res, next) {
 
 // });
 
-router.delete('/deleteproducts', function (req, res, next) {
+router.delete('/deleteproducts', async function (req, res, next) {
     try {
-        req.body.productsToDelete.forEach(e => {
-            if (e.toDelete)
-                Product.delete(e.id)
+        req.body.productsToDelete.forEach(async e => {
+            if (e.toDelete){
+                console.log(e.id)
+                await Product.delete(e.id)
+            } else{
+                console.log(e.toDelete)
+            }
+                
         });
+        console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', req.body.productsToDelete)
         res.end()
     }
     catch (error) {

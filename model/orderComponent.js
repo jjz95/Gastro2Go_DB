@@ -60,6 +60,6 @@ class OrderComponent {
     }
 }
 
-OrderComponent.initData();
+// OrderComponent.initData();
 
 module.exports = OrderComponent;

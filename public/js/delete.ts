@@ -2,18 +2,19 @@ import { json } from "express/lib/express"
 //\d+$
 function deleteSelectedProducts() {
     try {
-
-
         let productsToDelete = []
         var trs = document.querySelectorAll('#tbody-interests tr');
-
+        console.log('trs', trs)
         for (let i = 0; i < trs.length; ++i) {
             let currRow = <HTMLTableRowElement>trs[i]
             let currCheckboxCell = currRow.cells[0]
 
             let currIdCell = currRow.cells[1]
             let currCheckBox = <HTMLInputElement>currCheckboxCell.firstElementChild
-
+            console.log('currRow', currRow)
+            console.log('currCheckboxCell', currCheckboxCell)
+            console.log('currIdCell', currIdCell)
+            console.log('currCheckBox', currCheckBox)
             productsToDelete.push({
                 id: currIdCell.innerHTML,
                 toDelete: currCheckBox.checked
@@ -33,7 +34,7 @@ function deleteSelectedProducts() {
                 productsToDelete: productsToDelete
             })
         }).then(response => {
-            // window.location.reload()
+            window.location.reload()
             console.log(response)
         }).catch(e =>
             console.log(e)

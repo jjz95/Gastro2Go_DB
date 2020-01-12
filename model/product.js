@@ -62,9 +62,19 @@ class Product {
     }
 
     //usuwanie obiektu po id
-    static delete(id) {
-        OrderComponent.deleteProduct(id)
-        return productExtent.splice(productExtent.findIndex(u => u.id == id), 1)
+    static async delete(id) {
+        // OrderComponent.deleteProduct(id)
+        // return productExtent.splice(productExtent.findIndex(u => u.id == id), 1)
+
+        // // await db.execute(
+        // //     'DELETE FROM user_interest WHERE user_id=(?);',
+        // //     [id]
+        // // );
+        console.log('ccccccccccccccccccccccccccccccccccccccccccccccc', id)
+        await db.execute(
+            'DELETE FROM product WHERE id=(?);',
+            [id]
+        );
     }
 
     //metoda resetuje stan bazy i dodaje rekordy testowe

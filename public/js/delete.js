@@ -5,11 +5,16 @@ function deleteSelectedProducts() {
     try {
         var productsToDelete = [];
         var trs = document.querySelectorAll('#tbody-interests tr');
+        console.log('trs', trs);
         for (var i = 0; i < trs.length; ++i) {
             var currRow = trs[i];
             var currCheckboxCell = currRow.cells[0];
             var currIdCell = currRow.cells[1];
             var currCheckBox = currCheckboxCell.firstElementChild;
+            console.log('currRow', currRow);
+            console.log('currCheckboxCell', currCheckboxCell);
+            console.log('currIdCell', currIdCell);
+            console.log('currCheckBox', currCheckBox);
             productsToDelete.push({
                 id: currIdCell.innerHTML,
                 toDelete: currCheckBox.checked
