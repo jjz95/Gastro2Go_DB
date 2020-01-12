@@ -5,7 +5,6 @@ const db = require('../db/mysql');
 
 
 //licznik id
-let nextId = 1;
 //ekstensja klasy (wszystkie obiekty)
 const userExtent = [];
 
@@ -27,17 +26,7 @@ class User {
 
     //dodawanie obiektu do bazy
     static async add(user) {
-        // user.id = nextId++;
-        // userExtent.push(user);
-        // return user;
-        // // if (!User.list().some(u => u.email.toLowerCase() === user.email.toLowerCase())) {
-        // //     user.id = nextId++;
-        // //     let hashedPass = await bcrypt.hash(user.passwordHash, 10)
-        // //     user.passwordHash = hashedPass
-        // //     userExtent.push(user);
-        // //     return true;
-        // // }
-        // // return false;
+
         let users = await User.list()
         console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
         if (!users.some(u => u.email.toLowerCase() == user.email.toLowerCase())) {
@@ -70,19 +59,23 @@ class User {
     }
     //edycja obiektu
     static async edit(firstName, lastName, email, passwordHash, dateOfBirth, contactNumber, business, address, zipCode, country, id) {
-        let userToEdit = userExtent.find(u => u.id == id)
+        // let userToEdit = userExtent.find(u => u.id == id)
         let hashedPass = await bcrypt.hash(passwordHash, 10)
-        userToEdit.firstName = firstName
-        userToEdit.lastName = lastName
-        userToEdit.email = email
-        userToEdit.passwordHash = hashedPass
-        userToEdit.dateOfBirth = dateOfBirth
-        userToEdit.contactNumber = contactNumber
-        userToEdit.business = business
-        userToEdit.address = address
-        userToEdit.zipCode = zipCode
-        userToEdit.country = country
-        return userToEdit;
+        // userToEdit.firstName = firstName
+        // userToEdit.lastName = lastName
+        // userToEdit.email = email
+        // userToEdit.passwordHash = hashedPass
+        // userToEdit.dateOfBirth = dateOfBirth
+        // userToEdit.contactNumber = contactNumber
+        // userToEdit.business = business
+        // userToEdit.address = address
+        // userToEdit.zipCode = zipCode
+        // userToEdit.country = country
+        await db.execute(
+            'update client set firstName = (?), lastName = (?), email = (?), passwordHash = (?), dateOfBirth = (?), contactNumber = (?), business = (?), address = (?), zipCode = (?), country = (?) where id = (?)',
+            [firstName, lastName, email, hashedPass, dateOfBirth, contactNumber, business, address, zipCode, country, id]
+        );
+        return true;
     }
 
     //usuwanie obiektu po id
@@ -102,17 +95,6 @@ class User {
 
     //metoda resetuje stan bazy i dodaje rekordy testowe
     //przydatna do testów
-    static async initData() {
-        //usuwamy zawartość tablicy
-        userExtent.splice(0, userExtent.length);
-        //resetujemy licznik id
-        nextId = 1;
-
-        //dla uproszczenia wszyscy użytkowinicy mają takie samo hasło :)
-        User.add(new User('Jan', 'Kowalski', 'jk@wp.pl', '1234', new Date("1990-03-25"), 123456789, 'fishing', 'koszykowa', '00-001', 'France'));
-        User.add(new User('Anna', 'Wiśniewska', 'aw@onet.pl', '1234', new Date("1991-03-25"), 111111111, 'skiing', 'hitler strasse', '00-003', 'Germany'));
-        User.add(new User('Andrzej', 'Nowak', 'an@gmail.com', '1234', new Date("1992-03-25"), 222222222, 'snowboard', 'smith street', '00-002', 'England'));
-    }
 
     static async findByEmail(email) {
         let users = await User.list()
@@ -132,6 +114,5 @@ class User {
     }
 }
 
-// User.initData();
 
 module.exports = User;
