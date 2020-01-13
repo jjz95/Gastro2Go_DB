@@ -2,11 +2,6 @@ var OrderComponent = require('./orderComponent');
 
 const db = require('../db/mysql');
 
-
-
-//ekstensja klasy (wszystkie obiekty)
-const productExtent = [];
-
 class Product {
     //parametr id jest na końcu, bo jest opcjonalny
     constructor(nazwa, typ, waga, cena, id) {
@@ -66,11 +61,10 @@ class Product {
         // OrderComponent.deleteProduct(id)
         // return productExtent.splice(productExtent.findIndex(u => u.id == id), 1)
 
-        // // await db.execute(
-        // //     'DELETE FROM user_interest WHERE user_id=(?);',
-        // //     [id]
-        // // );
-        console.log('ccccccccccccccccccccccccccccccccccccccccccccccc', id)
+        await db.execute(
+            'DELETE FROM purchase_item WHERE idProduct=(?);',
+            [id]
+        );
         await db.execute(
             'DELETE FROM product WHERE id=(?);',
             [id]

@@ -4,6 +4,7 @@ const router = express.Router();
 const User = require('../model/user');
 const Product = require('../model/product');
 const OrderComponent = require('../model/orderComponent');
+const Order = require('../model/order');
 
 const ProductView = require('../model/productView');
 
@@ -11,8 +12,11 @@ router.get("/", async (req, res, next) => {
     let productList = []
     let products = []
     let realProductList = await Product.list()
-    OrderComponent.list()
-        .filter(oc => oc.idUser == req.session.loggedUser.id)
+    let orderComponents = await OrderComponent.list()
+    let orders = await Order.list()
+    let orderPending = orders.find(o => o.userId == req.session.loggedUser.id && o.status == 'pending')
+
+    orderComponents.filter(oc => oc.idPurchase == orderPending.id) 
         .forEach(oc => {
             let newProd = realProductList.find(p => p.id == oc.idProduct)
             products.push(newProd)
@@ -21,7 +25,7 @@ router.get("/", async (req, res, next) => {
         })
 
     let restProductList = []
-    restProductList = realProductList.filter( ( el ) => !products.includes( el ) );
+    restProductList = realProductList.filter((el) => !products.includes(el));
 
     res.render('profil', {
         productList: productList,
@@ -93,7 +97,6 @@ router.post("/panel", async (req, res, next) => {
 })
 
 router.post("/delete", async (req, res, next) => {
-    console.log(req.session.loggedUser)
     await User.delete(req.session.loggedUser.id)
     req.session.destroy();
     res.redirect('/');
@@ -108,7 +111,7 @@ router.post("/addproduct", (req, res, next) => {
     let userId = req.session.loggedUser.id
     let productId = req.body.productId
     if (!isNaN(userId) && !isNaN(productId) && userId != '' && productId != '') {
-        OrderComponent.add(new OrderComponent(userId, productId, 1))
+        OrderComponent.add(userId, productId)
     }
     res.redirect('/users')
 })
