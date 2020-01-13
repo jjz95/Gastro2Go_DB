@@ -7,6 +7,7 @@ const OrderComponent = require('../model/orderComponent');
 const Order = require('../model/order');
 
 const ProductView = require('../model/productView');
+const ConfirmedOrderView = require('../model/confirmedOrderView');
 
 router.get("/", async (req, res, next) => {
     let productList = []
@@ -73,10 +74,14 @@ router.get("/shop", async (req, res, next) => {
 })
 
 router.get("/orders", async (req, res, next) => {
-let confirmedOrders = Order.findConfirmedOrdersByUserId(req.session.loggedUser.id)
+    let confirmedOrders = Order.findConfirmedOrdersByUserId(req.session.loggedUser.id)
+    let confirmedOrdersView = []
+    // confirmedOrders.forEach(co => {
 
+    // })
+    confirmedOrdersView = new ConfirmedOrderView()
     res.render('zamowienia', {
-        confirmedOrders: confirmedOrders
+        confirmedOrdersView: confirmedOrdersView
     })
 })
 

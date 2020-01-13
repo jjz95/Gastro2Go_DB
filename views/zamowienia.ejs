@@ -38,23 +38,24 @@
                     <caption>Orders:</caption>
                     <thead>
                         <tr>
-                            <th>Nazwa</th>
-                            <th>Typ</th>
-                            <th>Waga</th>
-                            <th>Cena</th>
+                            <th>numer identyfikacyjny</th>
+                            <th>data zamowienia</th>
+                            <th>status</th>
+                            <th>cena ogolna</th>
+                            <th>waga ogolna</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tfoot>
                     </tfoot>
                     <tbody>
-                        <% confirmedOrders.forEach(function(p){ %>
+                        <% confirmedOrdersView.forEach(function(p){ %>
                         <tr>
                             <form action="/users/addproduct" method="POST">
-                                <td><%= p.nazwa %></td>
-                                <td><%= p.typ %></td>
-                                <td><%= p.waga %></td>
-                                <td><%= p.cena %></td>
+                                <td><%= p.id %></td>
+                                <td><%= p.created_at %></td>
+                                <td><%= p.status %></td>
+                                <td><%=  %></td>
                                 <td><input type="hidden" name="productId" value="<%= p.id %>"></td>
                                 <td><button class="float-right" type="submit">Add Product</button></td>
                             </form>
