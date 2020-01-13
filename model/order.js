@@ -61,6 +61,25 @@ class Order {
             })
         return DBdata[0];
     }
+
+    static async findPendingOrderByUserId(userId){
+        let orders = await Order.list()
+        return orders.find(o => o.userId == userId && o.status == 'pending')
+    }
+
+    static async updateStatusToConfirmed(id){
+        let status = 'confirmed'
+        await db.execute(
+            'update purchase set `status` = (?), created_at = CURRENT_DATE() where id = (?)',
+            [status, id]
+        );
+    }
+
+    static async findConfirmedOrdersByUserId(userId){
+        let orders = await Order.list()
+        return orders.find(o => o.userId == userId && o.status == 'confirmed')
+    }
+
     //edycja obiektu
     // static async edit(nazwa, typ, waga, cena, id) {
     //     // let productToEdit = productExtent.find(u => u.id == id)

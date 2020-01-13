@@ -126,9 +126,3 @@ footer {
     background-color: rgb(255, 255, 255, 0.9);
 }
 
-.inline-block{
-    display: inline-block;
-    background-color: seashell;
-    /* grid-column:  */
-    width: 15rem;
-}

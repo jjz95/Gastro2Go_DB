@@ -16,8 +16,7 @@ class OrderComponent {
 
     //dodawanie obiektu do bazy
     static async add(userId, productId) {
-        let orders = await Order.list()
-        let orderPending = orders.find(o => o.userId == userId && o.status == 'pending')
+        let orderPending = await Order.findPendingOrderByUserId(userId)
         // let orderPending = orders.find(o => o.userId == userId)
         let orderId;
         if (orderPending) {
@@ -54,34 +53,53 @@ class OrderComponent {
     }
     //edycja obiektu
     static async edit(idPurchase, idProduct, ilosc) {
-        let orderComponentToEdit = orderComponentExtent.find(u => u.idPurchase == idPurchase && u.idProduct == idProduct)
-        orderComponentToEdit.ilosc = ilosc
-        return orderComponentToEdit;
+        // let orderComponentToEdit = orderComponentExtent.find(u => u.idPurchase == idPurchase && u.idProduct == idProduct)
+        // orderComponentToEdit.ilosc = ilosc
+        // // return orderComponentToEdit;
+
+        await db.execute(
+            'update purchase_item set ilosc = (?) where idPurchase = (?) AND idProduct = (?)',
+            [ilosc, idPurchase, idProduct]
+        );
+            
     }
 
     //usuwanie obiektu po id
-    static delete(idPurchase, idProduct) {
-        return orderComponentExtent.splice(orderComponentExtent.findIndex(u => u.idPurchase == idPurchase && u.idProduct == idProduct), 1)
+    static async delete(idPurchase, idProduct, userId) {
+        await db.execute(
+            'DELETE FROM purchase_item WHERE idPurchase=(?) AND idProduct=(?);',
+            [idPurchase, idProduct]
+        );
+
+        let ordersComponents = await OrderComponent.list()
+        if (!ordersComponents.some(oc => oc.idPurchase == idPurchase)) {
+            let status = 'pending'
+            await db.execute(
+                'DELETE FROM purchase WHERE status = (?) AND userId = (?)',
+                [status, userId]
+            );
+        }
+        // return orderComponentExtent.splice(orderComponentExtent.findIndex(u => u.idPurchase == idPurchase && u.idProduct == idProduct), 1)
     }
 
-    static deleteProduct(idProduct) {
-        orderComponentExtent.removeIf(ui => ui.idProduct == idProduct)
-    }
+    // static deleteProduct(idProduct) {
+    //     orderComponentExtent.removeIf(ui => ui.idProduct == idProduct)
+    // }
 
-    static deleteUsers(idPurchase) {
-        orderComponentExtent.removeIf(ui => ui.idPurchase == idPurchase)
-    }
+    // static deleteUsers(idPurchase) {
+    //     orderComponentExtent.removeIf(ui => ui.idPurchase == idPurchase)
+    // }
 
     //metoda resetuje stan bazy i dodaje rekordy testowe
     //przydatna do testów
-    static async initData() {
-        //usuwamy zawartość tablicy
-        orderComponentExtent.splice(0, orderComponentExtent.length);
+    // static async initData() {
+    //     //usuwamy zawartość tablicy
+    //     orderComponentExtent.splice(0, orderComponentExtent.length);
 
-        OrderComponent.add(new OrderComponent(1, 1, 1));
-        OrderComponent.add(new OrderComponent(1, 2, 2));
-        OrderComponent.add(new OrderComponent(2, 1, 3));
-    }
+    //     OrderComponent.add(new OrderComponent(1, 1, 1));
+    //     OrderComponent.add(new OrderComponent(1, 2, 2));
+    //     OrderComponent.add(new OrderComponent(2, 1, 3));
+    // }
 }
 
 // OrderComponent.initData();

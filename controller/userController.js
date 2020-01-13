@@ -11,27 +11,75 @@ const ProductView = require('../model/productView');
 router.get("/", async (req, res, next) => {
     let productList = []
     let products = []
+    let restProductList = []
+
     let realProductList = await Product.list()
     let orderComponents = await OrderComponent.list()
-    let orders = await Order.list()
-    let orderPending = orders.find(o => o.userId == req.session.loggedUser.id && o.status == 'pending')
+    let orderPending = await Order.findPendingOrderByUserId(req.session.loggedUser.id)
+    let orderPendingId = -1
+    if (orderPending) {
+        orderPendingId = orderPending.id
 
-    orderComponents.filter(oc => oc.idPurchase == orderPending.id) 
-        .forEach(oc => {
-            let newProd = realProductList.find(p => p.id == oc.idProduct)
-            products.push(newProd)
-            let newProdView = new ProductView(newProd, oc.ilosc)
-            productList.push(newProdView)
-        })
+        orderComponents.filter(oc => oc.idPurchase == orderPending.id)
+            .forEach(oc => {
+                let newProd = realProductList.find(p => p.id == oc.idProduct)
+                products.push(newProd)
+                let newProdView = new ProductView(newProd, oc.ilosc)
+                productList.push(newProdView)
+            })
 
-    let restProductList = []
-    restProductList = realProductList.filter((el) => !products.includes(el));
+        restProductList = realProductList.filter((el) => !products.includes(el));
+    } else {
+        restProductList = realProductList
+    }
 
     res.render('profil', {
         productList: productList,
-        restProductList: restProductList
+        restProductList: restProductList,
+        orderPendingId: orderPendingId
     })
 })
+
+router.get("/shop", async (req, res, next) => {
+    let productList = []
+    let products = []
+    let restProductList = []
+
+    let realProductList = await Product.list()
+    let orderComponents = await OrderComponent.list()
+    let orderPending = await Order.findPendingOrderByUserId(req.session.loggedUser.id)
+    let orderPendingId = -1
+    if (orderPending) {
+        orderPendingId = orderPending.id
+
+        orderComponents.filter(oc => oc.idPurchase == orderPending.id)
+            .forEach(oc => {
+                let newProd = realProductList.find(p => p.id == oc.idProduct)
+                products.push(newProd)
+                let newProdView = new ProductView(newProd, oc.ilosc)
+                productList.push(newProdView)
+            })
+
+        restProductList = realProductList.filter((el) => !products.includes(el));
+    } else {
+        restProductList = realProductList
+    }
+
+    res.render('eksplorujProdukty', {
+        productList: productList,
+        restProductList: restProductList,
+        orderPendingId: orderPendingId
+    })
+})
+
+router.get("/orders", async (req, res, next) => {
+let confirmedOrders = Order.findConfirmedOrdersByUserId(req.session.loggedUser.id)
+
+    res.render('zamowienia', {
+        confirmedOrders: confirmedOrders
+    })
+})
+
 
 router.get("/panel", (req, res, next) => {
     var dateObj = new Date(req.session.loggedUser.dateOfBirth)
@@ -102,25 +150,36 @@ router.post("/delete", async (req, res, next) => {
     res.redirect('/');
 })
 
-router.post("/removeproduct/:id", (req, res, next) => {
-    OrderComponent.delete(req.session.loggedUser.id, req.params.id)
+router.post("/removeproduct/:id", async (req, res, next) => {
+    let orderPending = await Order.findPendingOrderByUserId(req.session.loggedUser.id)
+    await OrderComponent.delete(orderPending.id, req.params.id, req.session.loggedUser.id)
     res.redirect('/users')
 })
 
-router.post("/addproduct", (req, res, next) => {
+router.post("/addproduct", async (req, res, next) => {
     let userId = req.session.loggedUser.id
     let productId = req.body.productId
     if (!isNaN(userId) && !isNaN(productId) && userId != '' && productId != '') {
-        OrderComponent.add(userId, productId)
+        await OrderComponent.add(userId, productId)
     }
-    res.redirect('/users')
+    res.redirect('/users/shop')
 })
 
 router.put("/updateproduct", async (req, res, next) => {
-    req.body.productsToModify.forEach(pm =>
-        OrderComponent.edit(req.session.loggedUser.id, pm.productId, pm.ilosc)
+    let orderPending = await Order.findPendingOrderByUserId(req.session.loggedUser.id)
+
+    req.body.productsToModify.forEach(async pm =>
+        await OrderComponent.edit(orderPending.id, pm.productId, pm.ilosc)
     )
     res.end()
 })
+
+router.post("/ordernow/:id", async (req, res, next) => {
+    // let orders = await Order.list()
+    // orders.find(o => o.id == req.params.id)
+    Order.updateStatusToConfirmed(req.params.id)
+    res.redirect('/users')
+})
+
 
 module.exports.route = router; 

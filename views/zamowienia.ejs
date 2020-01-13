@@ -22,10 +22,8 @@
             </div>
         </div>
         <div class="headerItem">
-
             <a href="/users">Twoj Koszyk</a>
             <a href="/users/shop">Eksploruj Produkty</a>
-
             <!-- <a href="/info/kontakt">Kontakt</a>
             <a href="/info/onas">O Nas</a> -->
             <a href="/users/panel">Dane Użytkownika</a>
@@ -35,59 +33,41 @@
 
     <main>
         <div class="main">
-
-            <div class="product-table">
-                <table>
-                    <caption>Your Basket:</caption>
+            <div class="inline-block">
+                <table id="tabelka">
+                    <caption>Orders:</caption>
                     <thead>
                         <tr>
                             <th>Nazwa</th>
                             <th>Typ</th>
                             <th>Waga</th>
                             <th>Cena</th>
-                            <th>Waga ogolem</th>
-                            <th>Cena ogolem</th>
-                            <th>Ilosc</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tfoot>
                     </tfoot>
-                    <tbody id="tbody-orderComponents">
-                        <% if(productList.length > 0){ %>
-                        <% productList.forEach(function(pv){ %>
+                    <tbody>
+                        <% confirmedOrders.forEach(function(p){ %>
                         <tr>
-                            <form action="/users/removeproduct/<%= pv.product.id %>" method="POST">
-                                <td><%= pv.product.nazwa %></td>
-                                <td><%= pv.product.typ %></td>
-                                <td id="waga<%= pv.product.id %>"><%= pv.product.waga %></td>
-                                <td id="cena<%= pv.product.id %>"><%= pv.product.cena %></td>
-                                <td id="waga-ilosc<%= pv.product.id %>"><%= pv.product.waga * pv.ilosc %></td>
-                                <td id="cena-ilosc<%= pv.product.id %>"><%= pv.product.cena * pv.ilosc %></td>
-                                <td><input class="ilosc" id="ilosc<%= pv.product.id %>" min="1" type="number"
-                                        name="ilosc" required value="<%= pv.ilosc %>"></td>
-                                <td><button type="submit">Remove Product</button></td>
+                            <form action="/users/addproduct" method="POST">
+                                <td><%= p.nazwa %></td>
+                                <td><%= p.typ %></td>
+                                <td><%= p.waga %></td>
+                                <td><%= p.cena %></td>
+                                <td><input type="hidden" name="productId" value="<%= p.id %>"></td>
+                                <td><button class="float-right" type="submit">Add Product</button></td>
                             </form>
                         </tr>
                         <% }) %>
-                        <% } %>
                     </tbody>
                 </table>
             </div>
-            <% if(orderPendingId != -1){%>
-            <div class="flex">
-                <button onclick="updateProducts()" type="submit">Update Products</button>
 
-                <form action="/users/ordernow/<%= orderPendingId %>" method="POST">
-                    <button type="submit">Order Now!</button>
-                </form>
 
-            </div>
-            <% }%>
-            <br>
 
         </div>
-        <div>
-        </div>
+
     </main>
 
     <footer>

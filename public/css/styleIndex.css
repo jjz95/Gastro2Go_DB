@@ -11,25 +11,32 @@
     padding: .9em;
 }
 
-.form-row > label {
+.form-row>label {
     padding: .5em 1em .5em 0;
     flex: 1;
 }
 
-.form-row > input {
+.form-row>input {
     flex: 2;
 }
 
-.form-row > input,
-.form-row > button {
+.form-row>input, .form-row>button {
     padding: .5em;
 }
 
-form {
-
-
-}
+form {}
 
 input {
     height: 1em;
+}
+
+.flex {
+    display: flex;
+}
+
+
+
+.headerItem a{
+    padding: 2rem;
+    font-size: 2rem;
 }
