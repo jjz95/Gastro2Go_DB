@@ -75,9 +75,9 @@ class Order {
         );
     }
 
-    static async findConfirmedOrdersByUserId(userId){
+    static async getOrderedOrdersByUserId(userId){
         let orders = await Order.list()
-        return orders.find(o => o.userId == userId && o.status == 'confirmed')
+        return orders.filter(o => o.userId == userId && o.status != 'pending')
     }
 
     //edycja obiektu

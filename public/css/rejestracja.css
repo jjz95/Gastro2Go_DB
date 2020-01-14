@@ -116,3 +116,10 @@ footer {
 .val_error{
 	text-align: center
 }
+
+.a-img{
+    display: block;
+    width: 10em;
+    height: 10em;
+}
+

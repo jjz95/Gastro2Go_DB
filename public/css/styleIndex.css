@@ -40,3 +40,14 @@ input {
     padding: 2rem;
     font-size: 2rem;
 }
+
+.whiteBackground {
+    display: inline-block;
+    background-color: aliceblue;
+}
+
+table{
+    border: 1px solid black;
+    border-collapse: separate;
+    border-spacing: 15px;
+}

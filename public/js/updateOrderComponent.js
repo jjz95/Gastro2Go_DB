@@ -20,6 +20,15 @@ for (var i = 0; i < iloscInputs.length; i++) {
         document.getElementById("waga-ilosc" + numId).innerHTML = (numWaga * numIlosc).toString();
     });
 }
+var dontForget = document.getElementById('dontForget');
+dontForget.style.color = 'grey';
+setInterval(function () {
+    if (dontForget.style.color == 'grey')
+        dontForget.style.color = 'blue';
+    else {
+        dontForget.style.color = 'grey';
+    }
+}, 350);
 function updateProducts() {
     var productsToModify = [];
     var iloscInputs = document.getElementsByClassName('ilosc');

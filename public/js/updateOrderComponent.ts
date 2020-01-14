@@ -23,6 +23,15 @@ for (let i = 0; i < iloscInputs.length; i++) {
     });
 }
 
+let dontForget = document.getElementById('dontForget')
+dontForget.style.color = 'grey'
+setInterval(function(){
+    if(dontForget.style.color == 'grey') 
+        dontForget.style.color = 'blue'
+    else{
+        dontForget.style.color = 'grey'
+    }
+}, 350);
 
 function updateProducts() {
     let productsToModify = []

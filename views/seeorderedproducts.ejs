@@ -18,12 +18,14 @@
     <header>
         <div class="headerItemImg">
             <div>
-                <a href="/users/"><img class="GastroIcon" src="/img/GASTRO.png" alt="???"></a>
+                <a class="a-img" href="/users/"><img class="GastroIcon" src="/img/GASTRO.png" alt="???"></a>
             </div>
         </div>
         <div class="headerItem">
-            <a href="/users">Twoj Koszyk</a>
+
+            <a href="/users">Twój Koszyk</a>
             <a href="/users/shop">Eksploruj Produkty</a>
+
             <!-- <a href="/info/kontakt">Kontakt</a>
             <a href="/info/onas">O Nas</a> -->
             <a href="/users/orders">Twoje zamówienia</a>
@@ -34,41 +36,45 @@
 
     <main>
         <div class="main">
-            <div class="inline-block">
+
+            <div class="product-table">
                 <table id="tabelka">
-                    <caption>Orders:</caption>
+                    <caption>Your Order: <%= orderId %></caption>
                     <thead>
                         <tr>
-                            <th>numer identyfikacyjny</th>
-                            <th>data zamowienia</th>
-                            <th>status</th>
-                            <th>cena ogolna</th>
-                            <th>waga ogolna</th>
-                            <th></th>
-                            <th></th>
+                            <th>Nazwa</th>
+                            <th>Typ</th>
+                            <th>Waga</th>
+                            <th>Cena</th>
+                            <th>Waga ogolem</th>
+                            <th>Cena ogolem</th>
+                            <th>Ilosc</th>
                         </tr>
                     </thead>
                     <tfoot>
                     </tfoot>
-                    <tbody>
-                        <% confirmedOrders.forEach(function(p){ %>
+                    <tbody id="tbody-orderComponents">
+                        <% if(productList.length > 0){ %>
+                        <% productList.forEach(function(pv){ %>
                         <tr>
-                            <td><%= p.id %></td>
-                            <td><%= p.created_at %></td>
-                            <td><%= p.status %></td>
-                            <td><%= p.cost %></td>
-                            <td><%= p.wage %></td>
-                            <form action="/users/seeorderedproducts/<%= p.id %>" method="GET">
-                                <td><button class="float-right" type="submit">See Ordered Product</button></td>
-                            </form>
-                            <form action="/users/cancelorder/<%= p.id %>" method="POST">
-                                <td><button class="float-right" type="submit">Cancel Order</button></td>
-                            </form>
+                                <td><%= pv.product.nazwa %></td>
+                                <td><%= pv.product.typ %></td>
+                                <td id="waga<%= pv.product.id %>"><%= pv.product.waga %></td>
+                                <td id="cena<%= pv.product.id %>"><%= pv.product.cena %></td>
+                                <td id="waga-ilosc<%= pv.product.id %>"><%= pv.product.waga * pv.ilosc %></td>
+                                <td id="cena-ilosc<%= pv.product.id %>"><%= pv.product.cena * pv.ilosc %></td>
+                                <td><%= pv.ilosc %></td>
                         </tr>
                         <% }) %>
+                        <% } %>
                     </tbody>
                 </table>
             </div>
+
+            <br>
+
+        </div>
+        <div>
         </div>
     </main>
 

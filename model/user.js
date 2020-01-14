@@ -3,11 +3,6 @@ var OrderComponent = require('./orderComponent');
 const bcrypt = require('bcryptjs');
 const db = require('../db/mysql');
 
-
-//licznik id
-//ekstensja klasy (wszystkie obiekty)
-const userExtent = [];
-
 class User {
     //parametr id jest na końcu, bo jest opcjonalny
     constructor(firstName, lastName, email, passwordHash, dateOfBirth, contactNumber, business, address, zipCode, country, id) {
@@ -28,7 +23,6 @@ class User {
     static async add(user) {
 
         let users = await User.list()
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
         if (!users.some(u => u.email.toLowerCase() == user.email.toLowerCase())) {
             let hashedPass = await bcrypt.hash(user.passwordHash, 10)
             user.passwordHash = hashedPass
@@ -86,7 +80,6 @@ class User {
         // //     'DELETE FROM user_interest WHERE user_id=(?);',
         // //     [id]
         // // );
-        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', id)
         await db.execute(
             'DELETE FROM client WHERE id=(?);',
             [id]

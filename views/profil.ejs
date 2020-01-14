@@ -18,7 +18,7 @@
     <header>
         <div class="headerItemImg">
             <div>
-                <a href="/users/"><img class="GastroIcon" src="/img/GASTRO.png" alt="???"></a>
+                <a class="a-img" href="/users/"><img class="GastroIcon" src="/img/GASTRO.png" alt="???"></a>
             </div>
         </div>
         <div class="headerItem">
@@ -38,7 +38,7 @@
         <div class="main">
 
             <div class="product-table">
-                <table>
+                <table id="tabelka">
                     <caption>Your Basket:</caption>
                     <thead>
                         <tr>
@@ -75,12 +75,12 @@
                 </table>
             </div>
             <% if(orderPendingId != -1){%>
+            <p id="dontForget" class="whiteBackground">(Don't forget to update product's amounts before ordering!)</p>
             <div class="flex">
-                <button onclick="updateProducts()" type="submit">Update Products Amounts (Ilosc)</button>
+                <button onclick="updateProducts()" type="submit">Update Product's Amounts (Ilosc)</button>
                 <form action="/users/ordernow/<%= orderPendingId %>" method="POST">
                     <button type="submit">Order Now!</button>
                 </form>
-
             </div>
             <% }%>
             <br>

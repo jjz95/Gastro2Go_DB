@@ -41,7 +41,7 @@ body {
 header,
 .horizontalNav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: stretch;
     border-style: groove;
     border: 5px ridge #A40000;
@@ -78,13 +78,16 @@ hr {
     flex-wrap: nowrap;
     justify-content: space-around;
     align-items: center;
+    
 
 }
 
 .headerItemImg {
     display: flex;
-    justify-content: flex-start;
+    height: 20em; 
+    width: 20em; 
     align-items: center;
+    justify-content: center;
 }
 
 .GastroIcon {
@@ -102,9 +105,9 @@ main {
     max-width: 2000px;
     min-height: 800px;
     max-height: 2000px;
-    display: grid;
+    /* display: grid;
     grid-template-columns: 5% 25% 5% 10% 10% 10% 5% 25% 5%;
-    grid-template-rows: 5% 75% 5% 10% 5%;
+    grid-template-rows: 5% 75% 5% 10% 5%; */
 
 }
 
@@ -126,3 +129,9 @@ footer {
     background-color: rgb(255, 255, 255, 0.9);
 }
 
+img {
+    height: 10em; 
+    width: 10em; 
+    max-width: 300px; 
+    max-height: 300px;
+}

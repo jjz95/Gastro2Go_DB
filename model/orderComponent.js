@@ -82,6 +82,10 @@ class OrderComponent {
         // return orderComponentExtent.splice(orderComponentExtent.findIndex(u => u.idPurchase == idPurchase && u.idProduct == idProduct), 1)
     }
 
+    static async getOrderComponentsByOrderId(idPurchase){
+        let orderComponents = await OrderComponent.list()
+        return orderComponents.filter(oc => oc.idPurchase == idPurchase)
+    }
     // static deleteProduct(idProduct) {
     //     orderComponentExtent.removeIf(ui => ui.idProduct == idProduct)
     // }

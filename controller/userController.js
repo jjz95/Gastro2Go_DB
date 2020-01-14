@@ -74,14 +74,44 @@ router.get("/shop", async (req, res, next) => {
 })
 
 router.get("/orders", async (req, res, next) => {
-    let confirmedOrders = Order.findConfirmedOrdersByUserId(req.session.loggedUser.id)
-    let confirmedOrdersView = []
+    let confirmedOrders = await Order.getOrderedOrdersByUserId(req.session.loggedUser.id)
+    // let confirmedOrdersView = []
     // confirmedOrders.forEach(co => {
 
     // })
-    confirmedOrdersView = new ConfirmedOrderView()
+    // confirmedOrdersView = new ConfirmedOrderView()
     res.render('zamowienia', {
-        confirmedOrdersView: confirmedOrdersView
+        confirmedOrders: confirmedOrders
+    })
+})
+
+router.get("/seeorderedproducts/:id", async (req, res, next) => {
+
+    // let orderComponents = await Order.getOrderComponentsByOrderId(req.params.id)
+    // // let confirmedOrdersView = []
+    // // confirmedOrders.forEach(co => {
+
+    // // })
+    // // confirmedOrdersView = new ConfirmedOrderView()
+    // res.render('seeorderedproducts', {
+    //     orderComponents: orderComponents
+    // })
+
+    let productList = []
+    let realProductList = await Product.list()
+    let orderComponents = await OrderComponent.list()
+
+    orderComponents.filter(oc => oc.idPurchase == req.params.id)
+        .forEach(oc => {
+            let newProd = realProductList.find(p => p.id == oc.idProduct)
+            let newProdView = new ProductView(newProd, oc.ilosc)
+            productList.push(newProdView)
+        })
+
+
+    res.render('seeorderedproducts', {
+        productList: productList,
+        orderId: req.params.id
     })
 })
 
