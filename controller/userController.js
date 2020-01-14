@@ -182,7 +182,20 @@ router.put("/updateproduct", async (req, res, next) => {
 router.post("/ordernow/:id", async (req, res, next) => {
     // let orders = await Order.list()
     // orders.find(o => o.id == req.params.id)
-    Order.updateStatusToConfirmed(req.params.id)
+    let orderComponents = await OrderComponent.list()
+    let orderComponentsFromPendingOrder = orderComponents.filter(oc => oc.idPurchase == req.params.id)
+    let products = await Product.list()
+
+    let cost = 0;
+    let wage = 0;
+    orderComponentsFromPendingOrder.forEach(oc => {
+        let currProduct = products.find(p => p.id == oc.idProduct)
+        let currPrice = currProduct.cena
+        let currWage = currProduct.waga
+        cost += currPrice * oc.ilosc
+        wage += currWage * oc.ilosc
+    })
+    Order.updateStatusToConfirmed(req.params.id, cost, wage)
     res.redirect('/users')
 })
 

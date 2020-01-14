@@ -8,9 +8,13 @@ for (let i = 0; i < iloscInputs.length; i++) {
         let numId = this.id.toString().replace('ilosc', '')
 
         let cena = document.getElementById(`cena${numId}`).innerHTML
+
         let numIlosc = parseFloat(ilosc.toString())
         let numCena = parseFloat(cena.toString())
-
+        if(isNaN(numIlosc) || numIlosc < 1){
+            numIlosc = 1
+            this.value = numIlosc
+        }
         let waga = document.getElementById(`waga${numId}`).innerHTML
         let numWaga = parseFloat(waga.toString())
 

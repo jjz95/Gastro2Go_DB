@@ -25,6 +25,14 @@ router.post('/addproduct', function (req, res, next) {
     let typ = req.body.typ.trim()
     let waga = req.body.waga.trim()
     let cena = req.body.cena.trim()
+    if(isNaN(waga) || waga < 1){
+        waga = 1
+        this.value = waga
+    }
+    if(isNaN(cena) || cena < 1){
+        cena = 1
+        this.value = cena
+    }
     if (lettersReg.test(nazwa)
         && lettersReg.test(typ)
         && numberReg.test(waga)
@@ -73,7 +81,15 @@ router.post('/updateproduct', async function (req, res, next) {
     let nazwa = req.body.nazwa.trim()
     let typ = req.body.typ.trim()
     let waga = req.body.waga.trim()
+    if(isNaN(waga) || waga < 1){
+        waga = 1
+        this.value = waga
+    }
     let cena = req.body.cena.trim()
+    if(isNaN(cena) || cena < 1){
+        cena = 1
+        this.value = cena
+    }
     if (lettersReg.test(nazwa)
         && lettersReg.test(typ)
         && numberReg.test(waga)

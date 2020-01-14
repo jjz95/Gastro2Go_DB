@@ -10,6 +10,10 @@ for (var i = 0; i < iloscInputs.length; i++) {
         var cena = document.getElementById("cena" + numId).innerHTML;
         var numIlosc = parseFloat(ilosc.toString());
         var numCena = parseFloat(cena.toString());
+        if (isNaN(numIlosc) || numIlosc < 1) {
+            numIlosc = 1;
+            this.value = numIlosc;
+        }
         var waga = document.getElementById("waga" + numId).innerHTML;
         var numWaga = parseFloat(waga.toString());
         document.getElementById("cena-ilosc" + numId).innerHTML = (numCena * numIlosc).toString();

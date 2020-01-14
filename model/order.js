@@ -3,11 +3,13 @@ const db = require('../db/mysql');
 
 class Order {
     //parametr id jest na końcu, bo jest opcjonalny
-    constructor(userId, created_at, status, id) {
+    constructor(userId, created_at, status, cost, wage, id) {
         this.id = id;
         this.userId = userId;
         this.created_at = created_at;
         this.status = status;
+        this.cost = cost;
+        this.wage = wage;
     }
 
     //dodawanie obiektu do bazy
@@ -27,7 +29,7 @@ class Order {
         // );
 
         await db.execute(
-            'insert into purchase (userId, created_at, status) values (?, null , ?)',
+            'insert into purchase (userId, created_at, status, cost, wage) values (?, null , ?, null, null)',
             [userId, 'pending'],
             function (err, results, fields) {
                 console.log(results); // results contains rows returned by server
@@ -37,12 +39,10 @@ class Order {
                 // which will save query preparation time and give better performance
             }
         ).then(([data, metadata]) => {
-            console.log('ggggggggggggggggggggggggggggggg',data)
             insertId = data.insertId
         }).catch(err => {
             console.log('err', err)
         });
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', insertId)
         return insertId
     }
 
@@ -67,11 +67,11 @@ class Order {
         return orders.find(o => o.userId == userId && o.status == 'pending')
     }
 
-    static async updateStatusToConfirmed(id){
+    static async updateStatusToConfirmed(id, cost, wage){
         let status = 'confirmed'
         await db.execute(
-            'update purchase set `status` = (?), created_at = CURRENT_DATE() where id = (?)',
-            [status, id]
+            'update purchase set `status` = (?), created_at = CURRENT_DATE(), cost = (?), wage = (?) where id = (?)',
+            [status, cost, wage, id]
         );
     }
 
