@@ -105,20 +105,23 @@ class Order {
     //     return true;
     // }
 
-    //usuwanie obiektu po id
-    // static async delete(id) {
-    //     // OrderComponent.deleteProduct(id)
-    //     // return productExtent.splice(productExtent.findIndex(u => u.id == id), 1)
+    static async delete(id) {
+        // OrderComponent.deleteProduct(id)
+        // return productExtent.splice(productExtent.findIndex(u => u.id == id), 1)
 
-    //     // // await db.execute(
-    //     // //     'DELETE FROM user_interest WHERE user_id=(?);',
-    //     // //     [id]
-    //     // // );
-    //     await db.execute(
-    //         'DELETE FROM product WHERE id=(?);',
-    //         [id]
-    //     );
-    // }
+        // // await db.execute(
+        // //     'DELETE FROM user_interest WHERE user_id=(?);',
+        // //     [id]
+        // // );
+        await db.execute(
+            'DELETE FROM purchase_item WHERE idPurchase=(?);',
+            [id]
+        );
+        await db.execute(
+            'DELETE FROM purchase WHERE id=(?);',
+            [id]
+        );
+    }
 
     //metoda resetuje stan bazy i dodaje rekordy testowe
     //przydatna do testów

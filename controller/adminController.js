@@ -42,10 +42,15 @@ router.get("/adminseeorders/:id", async (req, res, next) => {
     // })
     // confirmedOrdersView = new ConfirmedOrderView()
     res.render('adminseeorders', {
-        confirmedOrders: confirmedOrders
+        confirmedOrders: confirmedOrders,
+        userId: req.params.id
     })
 })
 
+router.post("/admindeleteorder/:userId/:orderId", async (req, res, next) => {
+    await Order.delete(req.params.orderId)
+    res.redirect(`/admin/adminseeorders/${req.params.userId}`)
+})
 
 router.get("/adminseeorderedproducts/:id", async (req, res, next) => {
     let productList = []

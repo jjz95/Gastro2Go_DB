@@ -3,7 +3,6 @@ form {
     flex-direction: column;
 }
 
-
 table,
 th,
 td {
@@ -42,4 +41,8 @@ a, button {
     font-weight: bolder;
     font-size: larger;
     background-color: black;
+}
+
+.log-out{
+    float: right
 }

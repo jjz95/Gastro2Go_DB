@@ -16,8 +16,8 @@
         <div class="header-item">
             <a class="blacked" href="/admin/">Go Back</a>
         </div>
-        <div class="header-item">
-            <a class="blacked" href="/admin/logout">Log out</a>
+        <div class="header-item log-out">
+            <a class="blacked log-out" href="/admin/logout">Log out</a>
         </div>
         <!-- <div class="header-item">
             <a class="blacked" href="/admin/adminzamowienie">User's Orders</a>
@@ -58,7 +58,7 @@
                             <form action="/admin/adminseeorderedproducts/<%= p.id %>" method="GET">
                                 <td><button class="float-right" type="submit">See Ordered Products</button></td>
                             </form>
-                            <form action="/admin/admindeleteorder/<%= p.id %>" method="POST">
+                            <form action="/admin/admindeleteorder/<%= userId %>/<%= p.id %>" method="POST">
                                 <td><button class="float-right" type="submit">Delete Order</button></td>
                             </form>
                         </tr>
