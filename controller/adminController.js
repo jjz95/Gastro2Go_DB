@@ -7,6 +7,10 @@ var ProductView = require('../model/productView')
 var Order = require('../model/order')
 var OrderComponent = require('../model/orderComponent')
 
+router.post("/admindeleteorder/:userId/:orderId", async (req, res, next) => {
+    await Order.delete(req.params.orderId)
+    res.redirect(`/admin/adminseeorders/${req.params.userId}`)
+})
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
@@ -47,10 +51,14 @@ router.get("/adminseeorders/:id", async (req, res, next) => {
     })
 })
 
-router.post("/admindeleteorder/:userId/:orderId", async (req, res, next) => {
-    await Order.delete(req.params.orderId)
-    res.redirect(`/admin/adminseeorders/${req.params.userId}`)
-})
+router.get('/adminusers', async function (req, res, next) {
+    res.render('adminusers', {
+        userList: await User.list()
+    })
+});
+
+
+
 
 router.get("/adminseeorderedproducts/:id", async (req, res, next) => {
     let productList = []

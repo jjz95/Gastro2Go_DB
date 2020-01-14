@@ -13,8 +13,12 @@
 <body>
 
     <header>
+    
         <div class="header-item log-out">
             <a class="blacked log-out" href="/admin/logout">Log out</a>
+        </div>
+        <div class="header-item">
+            <a class="blacked" href="/admin/adminusers">Users</a>
         </div>
         <!-- <div class="header-item">
             <a class="blacked" href="/admin/adminzamowienie">User's Orders</a>
@@ -22,50 +26,8 @@
     </header>
     <main>
 
-        <br>
-        <hr>
-        <br>
-        <table>
-            <caption>Users:</caption>
-            <thead>
-                <tr>
-                    <!-- firstName, lastName, email, passwordHash, dateOfBirth, contactNumber, business, address, zipCode, country, id -->
-                    <th>User ID</th>
-                    <th>E-mail</th>
-                    <th>FirstName</th>
-                    <th>LastName</th>
-                    <th>ContactNumber</th>
-                    <th>DateOfBirth</th>
-                    <th>Business</th>
-                    <th>Address</th>
-                    <th>ZipCode</th>
-                    <th>Country</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <% userList.forEach(function(user){ %>
-                <tr>
-                    <td><%= user.id %></td>
-                    <td><%= user.email %></td>
-                    <td><%= user.firstName %></td>
-                    <td><%= user.lastName %></td>
-                    <td><%= user.contactNumber %></td>
-                    <td><%= user.dateOfBirth %></td>
-                    <td><%= user.business %></td>
-                    <td><%= user.address %></td>
-                    <td><%= user.zipCode %></td>
-                    <td><%= user.country %></td>
-                    <form action="/admin/adminseeorders/<%= user.id %>" method="GET">
-                        <td><button type="submit">See Orders</button></td>
-                    </form>
-                </tr>
-                <% }) %>
-            </tbody>
-        </table>
-        <br>
-        <hr>
-        <br>
+     <p id="dontForget" class="whiteBackground">Click on the combo box options located to the very left of the Products table to pick products you wish to delete<br />
+    </p>
         <table>
             <caption>Products:</caption>
             <thead>
@@ -105,13 +67,13 @@
         <br>
         <p class="blacked">Add new product to system:</p>
         <form action="/admin/addproduct" method="POST">
-            <p class="blacked">new product name:</p>
+            <p class="blacked">new product name: (MUST CONTAIN ONLY PLAIN LETTERS)</p>
             <input type="text" name="nazwa" placeholder="Write product name here" required>
-            <p class="blacked">new product type:</p>
+            <p class="blacked">new product type: (MUST CONTAIN ONLY PLAIN LETTERS)</p>
             <input type="text" name="typ" placeholder="Write product type here" required>
-            <p class="blacked">new product wage:</p>
+            <p class="blacked">new product wage: (MUST CONTAIN ONLY NUMBERS)</p>
             <input type="number" min="0" name="waga" placeholder="Write product wage here" required>
-            <p class="blacked">new product price:</p>
+            <p class="blacked">new product price: (MUST CONTAIN ONLY NUMBERS)</p>
             <input type="number" min="0" name="cena" placeholder="Write product price here" required>
             <br>
             <button class="btn" type="submit">Add Product</button>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/admin.css" />
+    <script> var exports = {}; </script>
+    <script defer src="/js/delete.js"></script>
+    <title>Admin</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-item log-out">
+            <a class="blacked log-out" href="/admin/logout">Log out</a>
+        </div>
+        <!-- <div class="header-item">
+            <a class="blacked" href="/admin/adminzamowienie">User's Orders</a>
+        </div> -->
+    </header>
+    <main>
+
+        <br>
+        <hr>
+        <br>
+        <table>
+            <caption>Users:</caption>
+            <thead>
+                <tr>
+                    <!-- firstName, lastName, email, passwordHash, dateOfBirth, contactNumber, business, address, zipCode, country, id -->
+                    <th>User ID</th>
+                    <th>E-mail</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>ContactNumber</th>
+                    <th>DateOfBirth</th>
+                    <th>Business</th>
+                    <th>Address</th>
+                    <th>ZipCode</th>
+                    <th>Country</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% userList.forEach(function(user){ %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.firstName %></td>
+                    <td><%= user.lastName %></td>
+                    <td><%= user.contactNumber %></td>
+                    <td><%= user.dateOfBirth %></td>
+                    <td><%= user.business %></td>
+                    <td><%= user.address %></td>
+                    <td><%= user.zipCode %></td>
+                    <td><%= user.country %></td>
+                    <form action="/admin/adminseeorders/<%= user.id %>" method="GET">
+                        <td><button type="submit">See Orders</button></td>
+                    </form>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <br>
+        <hr>
+        
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>

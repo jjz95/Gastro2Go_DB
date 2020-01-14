@@ -46,3 +46,11 @@ a, button {
 .log-out{
     float: right
 }
+
+.whiteBackground {
+    display: inline-block;
+    background-color: aliceblue;
+    color: black;
+    padding: 0.5rem;
+    font-weight: bolder;
+}

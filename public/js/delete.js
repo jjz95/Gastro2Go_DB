@@ -42,6 +42,15 @@ function deleteSelectedProducts() {
         console.log(error);
     }
 }
+var dontForget = document.getElementById('dontForget');
+dontForget.style.color = 'grey';
+setInterval(function () {
+    if (dontForget.style.color == 'grey')
+        dontForget.style.color = 'blue';
+    else {
+        dontForget.style.color = 'grey';
+    }
+}, 350);
 // function test() {
 // alert("1");
 // console.log('1')
