@@ -16,7 +16,7 @@
 
     </header>
     <main>
-        <a href="/admin/logout">Log out</a>
+        <a class="blacked" href="/admin/logout">Log out</a>
         <br>
         <hr>
         <br>
@@ -91,26 +91,26 @@
                 <% }) %>
             </tbody>
         </table>
-        
-        <br>
-        <form action="/admin/addproduct" method="POST">
-            <p>Add new product to system:</p>
-            <input type="text" name="nazwa" placeholder="Write product name here" required>
-            <input type="text" name="typ" placeholder="Write product type here" required>
-            <input type="number" min="0" name="waga" placeholder="Write product wage here" required>
-            <input type="number" min="0" name="cena" placeholder="Write product price here" required>
-            <br>
-            <button class="btn" type="submit">Add Product</button>
-        </form>
-        <br>
-        
-        <br>
-        <hr>
         <br>
         <button onclick="deleteSelectedProducts()" id='deleteBtn' type="submit">Delete Selected Products</button>
         <br>
         <hr>
         <br>
+        <p class="blacked">Add new product to system:</p>
+        <form action="/admin/addproduct" method="POST">
+            <p class="blacked">new product name:</p>
+            <input type="text" name="nazwa" placeholder="Write product name here" required>
+            <p class="blacked">new product type:</p>
+            <input type="text" name="typ" placeholder="Write product type here" required>
+            <p class="blacked">new product wage:</p>
+            <input type="number" min="0" name="waga" placeholder="Write product wage here" required>
+            <p class="blacked">new product price:</p>
+            <input type="number" min="0" name="cena" placeholder="Write product price here" required>
+            <br>
+            <button class="btn" type="submit">Add Product</button>
+        </form>
+
+
     </main>
 
     <footer>

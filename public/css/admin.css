@@ -22,4 +22,9 @@ a, caption, p, h1 {
     color: aliceblue;
 }
 
+.blacked {
+    display: inline-block;
+    background-color: black;
+}
+
 
