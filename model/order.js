@@ -75,6 +75,14 @@ class Order {
         );
     }
 
+    static async updateStatusToCanceled(id){
+        let status = 'canceled'
+        await db.execute(
+            'update purchase set `status` = (?) where id = (?)',
+            [status, id]
+        );
+    }
+
     static async getOrderedOrdersByUserId(userId){
         let orders = await Order.list()
         return orders.filter(o => o.userId == userId && o.status != 'pending')

@@ -86,17 +86,6 @@ router.get("/orders", async (req, res, next) => {
 })
 
 router.get("/seeorderedproducts/:id", async (req, res, next) => {
-
-    // let orderComponents = await Order.getOrderComponentsByOrderId(req.params.id)
-    // // let confirmedOrdersView = []
-    // // confirmedOrders.forEach(co => {
-
-    // // })
-    // // confirmedOrdersView = new ConfirmedOrderView()
-    // res.render('seeorderedproducts', {
-    //     orderComponents: orderComponents
-    // })
-
     let productList = []
     let realProductList = await Product.list()
     let orderComponents = await OrderComponent.list()
@@ -113,6 +102,11 @@ router.get("/seeorderedproducts/:id", async (req, res, next) => {
         productList: productList,
         orderId: req.params.id
     })
+})
+
+router.post("/cancelorder/:id", async (req, res, next) => {
+    Order.updateStatusToCanceled(req.params.id)
+    res.redirect('/users/orders')
 })
 
 

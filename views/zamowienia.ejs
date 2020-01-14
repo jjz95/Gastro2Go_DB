@@ -55,15 +55,23 @@
                         <tr>
                             <td><%= p.id %></td>
                             <td><%= p.created_at %></td>
-                            <td><%= p.status %></td>
+                            <td>
+                                <%if (p.status == 'confirmed') { %>
+                                    <p style="color: green;"><%= p.status %></p>    
+                                <% } else { %>
+                                    <p style="color: red;"><%= p.status %></p>    
+                                <% }%>
+                            </td>
                             <td><%= p.cost %></td>
                             <td><%= p.wage %></td>
                             <form action="/users/seeorderedproducts/<%= p.id %>" method="GET">
                                 <td><button class="float-right" type="submit">See Ordered Product</button></td>
                             </form>
-                            <form action="/users/cancelorder/<%= p.id %>" method="POST">
-                                <td><button class="float-right" type="submit">Cancel Order</button></td>
-                            </form>
+                            <%if (p.status == 'confirmed') { %>
+                                <form action="/users/cancelorder/<%= p.id %>" method="POST">
+                                    <td><button class="float-right" type="submit">Cancel Order</button></td>
+                                </form>
+                            <% }%>
                         </tr>
                         <% }) %>
                     </tbody>
