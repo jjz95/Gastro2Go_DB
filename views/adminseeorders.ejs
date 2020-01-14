@@ -1,37 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<script defer src="/js/index.js"></script>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/profil.css" />
-    <link rel="stylesheet" href="/css/styleIndex.css" />
-    <link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css" />
     <script> var exports = {}; </script>
-    <script defer src="/js/updateOrderComponent.js"></script>
-    <title>Gastro2Go</title>
+    <script defer src="/js/delete.js"></script>
+    <title>Admin</title>
 </head>
 
 <body>
 
     <header>
-        <div class="headerItemImg">
-            <div>
-                <a href="/users/"><img class="GastroIcon" src="/img/GASTRO.png" alt="???"></a>
-            </div>
+        <div class="header-item">
+            <a class="blacked" href="/admin/">Go Back</a>
         </div>
-        <div class="headerItem">
-            <a href="/users">Twoj Koszyk</a>
-            <a href="/users/shop">Eksploruj Produkty</a>
-            <!-- <a href="/info/kontakt">Kontakt</a>
-            <a href="/info/onas">O Nas</a> -->
-            <a href="/users/orders">Twoje zamówienia</a>
-            <a href="/users/panel">Dane Użytkownika</a>
-            <a href="/auth/logout">Wyloguj</a>
+        <div class="header-item">
+            <a class="blacked" href="/admin/logout">Log out</a>
         </div>
+        <!-- <div class="header-item">
+            <a class="blacked" href="/admin/adminzamowienie">User's Orders</a>
+        </div> -->
     </header>
-
     <main>
         <div class="main">
             <div class="inline-block">
@@ -57,21 +48,19 @@
                             <td><%= p.created_at %></td>
                             <td>
                                 <%if (p.status == 'confirmed') { %>
-                                    <p style="color: green;"><%= p.status %></p>    
+                                <p style="color: green;"><%= p.status %></p>
                                 <% } else { %>
-                                    <p style="color: red;"><%= p.status %></p>    
+                                <p style="color: red;"><%= p.status %></p>
                                 <% }%>
                             </td>
                             <td><%= p.cost %></td>
                             <td><%= p.wage %></td>
-                            <form action="/users/seeorderedproducts/<%= p.id %>" method="GET">
+                            <form action="/admin/adminseeorderedproducts/<%= p.id %>" method="GET">
                                 <td><button class="float-right" type="submit">See Ordered Products</button></td>
                             </form>
-                            <%if (p.status == 'confirmed') { %>
-                                <form action="/users/cancelorder/<%= p.id %>" method="POST">
-                                    <td><button class="float-right" type="submit">Cancel Order</button></td>
-                                </form>
-                            <% }%>
+                            <form action="/admin/admindeleteorder/<%= p.id %>" method="POST">
+                                <td><button class="float-right" type="submit">Delete Order</button></td>
+                            </form>
                         </tr>
                         <% }) %>
                     </tbody>
@@ -81,10 +70,6 @@
     </main>
 
     <footer>
-        <div>
-            <p>Jakub Żarkowski S16574</p>
-        </div>
-
 
     </footer>
 

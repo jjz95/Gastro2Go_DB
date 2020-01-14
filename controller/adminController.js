@@ -3,6 +3,10 @@ var router = express.Router();
 
 var User = require('../model/user')
 var Product = require('../model/product')
+var ProductView = require('../model/productView')
+var Order = require('../model/order')
+var OrderComponent = require('../model/orderComponent')
+
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
@@ -12,6 +16,55 @@ router.get('/', async function (req, res, next) {
         // interestList: Interest.list()
     })
 });
+
+
+router.get("/adminseeorders/:id", async (req, res, next) => {
+    // let productList = []
+    // let realProductList = await Product.list()
+    // let orderComponents = await OrderComponent.list()
+
+    // orderComponents.filter(oc => oc.idPurchase == req.params.id)
+    //     .forEach(oc => {
+    //         let newProd = realProductList.find(p => p.id == oc.idProduct)
+    //         let newProdView = new ProductView(newProd, oc.ilosc)
+    //         productList.push(newProdView)
+    //     })
+
+
+    // res.render('adminseeorders', {
+    //     productList: productList,
+    //     orderId: req.params.id
+    // })
+    let confirmedOrders = await Order.getOrderedOrdersByUserId(req.params.id)
+    // let confirmedOrdersView = []
+    // confirmedOrders.forEach(co => {
+
+    // })
+    // confirmedOrdersView = new ConfirmedOrderView()
+    res.render('adminseeorders', {
+        confirmedOrders: confirmedOrders
+    })
+})
+
+
+router.get("/adminseeorderedproducts/:id", async (req, res, next) => {
+    let productList = []
+    let realProductList = await Product.list()
+    let orderComponents = await OrderComponent.list()
+
+    orderComponents.filter(oc => oc.idPurchase == req.params.id)
+        .forEach(oc => {
+            let newProd = realProductList.find(p => p.id == oc.idProduct)
+            let newProdView = new ProductView(newProd, oc.ilosc)
+            productList.push(newProdView)
+        })
+
+
+    res.render('adminseeorderedproducts', {
+        productList: productList,
+        orderId: req.params.id
+    })
+})
 
 router.get('/logout', function (req, res, next) {
     req.session.destroy();

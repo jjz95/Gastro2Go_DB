@@ -13,10 +13,15 @@
 <body>
 
     <header>
-
+        <div class="header-item">
+            <a class="blacked" href="/admin/logout">Log out</a>
+        </div>
+        <!-- <div class="header-item">
+            <a class="blacked" href="/admin/adminzamowienie">User's Orders</a>
+        </div> -->
     </header>
     <main>
-        <a class="blacked" href="/admin/logout">Log out</a>
+
         <br>
         <hr>
         <br>
@@ -25,7 +30,6 @@
             <thead>
                 <tr>
                     <!-- firstName, lastName, email, passwordHash, dateOfBirth, contactNumber, business, address, zipCode, country, id -->
-                    <th></th>
                     <th>User ID</th>
                     <th>E-mail</th>
                     <th>FirstName</th>
@@ -36,12 +40,12 @@
                     <th>Address</th>
                     <th>ZipCode</th>
                     <th>Country</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <% userList.forEach(function(user){ %>
                 <tr>
-                    <td></td>
                     <td><%= user.id %></td>
                     <td><%= user.email %></td>
                     <td><%= user.firstName %></td>
@@ -52,6 +56,9 @@
                     <td><%= user.address %></td>
                     <td><%= user.zipCode %></td>
                     <td><%= user.country %></td>
+                    <form action="/admin/adminseeorders/<%= user.id %>" method="GET">
+                        <td><button type="submit">See Orders</button></td>
+                    </form>
                 </tr>
                 <% }) %>
             </tbody>
